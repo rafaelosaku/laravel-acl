@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -104,5 +106,20 @@ class UserController extends Controller
         $user->delete();
 
         return redirect()->route('users.index');
+    }
+
+    /**
+     * @param Role $role
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function roles(Role $role)
+    {
+        $permissions = Permission::all();
+        return view('roles.permissions', compact('role','permissions'));
+    }
+
+    public function syncRoles(Request $request, Role $role)
+    {
+        dd($request, $role);
     }
 }
